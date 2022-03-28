@@ -1,19 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "./useForm";
+import { Hello } from "./hello";
 
 const UseState = () => {
   const [values, handleChange] = useForm({ email: "", password: "" });
-
-  /**
-   * every time the components gets re-render the
-   * useEffect function gets called
-   */
-  useEffect(() => {
-    console.log("useEffect hook!");
-  }, [values.email]);
+  const [hello, setHello] = useState(true);
 
   return (
     <div>
+      <button onClick={() => setHello(!hello)}>Toggle</button>
+
+      {hello && <Hello />}
+
       <input
         type="text"
         placeholder="email"
