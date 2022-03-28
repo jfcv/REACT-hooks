@@ -1,37 +1,24 @@
+import { toHaveFormValues } from "@testing-library/jest-dom/dist/matchers";
 import React, { Component, useState } from "react";
-
-const expensiveInitialState = () => {
-  /**
-   * a lot of computations
-   * for loops, etc ..
-   */
-  return 10;
-};
+import { useForm } from "./useForm";
 
 const UseState = () => {
-  /**
-   * using useState when having an expensive initial state
-   * you call it using a function
-   * that way you ensure it is only called once
-   */
-  // const [count, setCount] = useState(() => expensiveInitialState());
-
-  const [count, setCount] = useState(10);
-  const [count2, setCount2] = useState(20);
+  const [values, handleChange] = useForm({ email: "", password: "" });
 
   return (
     <div>
-      <h1>Heading 1</h1>
-      <div>count 1 : {count}</div>
-      <div>count 2 : {count2}</div>
-      <button
-        onClick={() => {
-          setCount(count + 1);
-          setCount2(count2 + 1);
-        }}
-      >
-        +
-      </button>
+      <input
+        type="text"
+        name="email"
+        value={values.email}
+        onChange={handleChange}
+      />
+      <input
+        type="password"
+        name="password"
+        value={values.password}
+        onChange={handleChange}
+      />
     </div>
   );
 };
