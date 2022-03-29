@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "./useForm";
 import { Hello } from "./hello";
 import { useFetch } from "./useFetch";
@@ -7,17 +7,17 @@ const UseState = () => {
   const [values, handleChange] = useForm({ email: "", password: "" });
   const [hello, setHello] = useState(true);
 
-  useEffect(() => {
-    const onMouseMove = (e) => {
-      console.log(e);
-    };
+  // useEffect(() => {
+  //   const onMouseMove = (e) => {
+  //     console.log(e);
+  //   };
 
-    window.addEventListener("mousemove", onMouseMove);
+  //   window.addEventListener("mousemove", onMouseMove);
 
-    return () => {
-      window.removeEventListener("mousemove", onMouseMove);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("mousemove", onMouseMove);
+  //   };
+  // }, []);
 
   /**
    * fetching data : useEffect
@@ -33,6 +33,15 @@ const UseState = () => {
     localStorage.setItem("count", JSON.stringify(count));
   }, [count]);
 
+  /**
+   * useRef
+   * getting reference for a React Component
+   * and being able to use it somewhere in the application
+   * where it's needed
+   */
+  const inputRef = useRef();
+  const helloFn = useRef(() => console.log("hello"));
+
   return (
     <div>
       <div>{loading ? "loading ...!" : data}</div>
@@ -44,6 +53,7 @@ const UseState = () => {
       {hello && <Hello />}
 
       <input
+        ref={inputRef}
         type="text"
         placeholder="email"
         name="email"
@@ -57,6 +67,15 @@ const UseState = () => {
         value={values.password}
         onChange={handleChange}
       />
+
+      <button
+        onClick={() => {
+          inputRef.current.focus();
+          helloFn.current();
+        }}
+      >
+        Focus
+      </button>
     </div>
   );
 };
