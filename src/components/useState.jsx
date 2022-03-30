@@ -10,6 +10,7 @@ import { Hello } from "./hello";
 import { useFetch } from "./useFetch";
 import { useMeasure } from "./useMeasure";
 import { World } from "./world";
+import UseMemo from "./useMemo";
 
 const UseState = () => {
   const [values, handleChange] = useForm({ email: "", password: "" });
@@ -64,6 +65,8 @@ const UseState = () => {
 
   return (
     <div>
+      <UseMemo />
+
       <div>
         <World increment={increment} />
         <div>useCallback counter: {counter}</div>
