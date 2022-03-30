@@ -1,8 +1,15 @@
-import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useLayoutEffect,
+  useCallback,
+} from "react";
 import { useForm } from "./useForm";
 import { Hello } from "./hello";
 import { useFetch } from "./useFetch";
 import { useMeasure } from "./useMeasure";
+import { World } from "./world";
 
 const UseState = () => {
   const [values, handleChange] = useForm({ email: "", password: "" });
@@ -45,8 +52,23 @@ const UseState = () => {
 
   const [domRect, elementRef] = useMeasure([data]);
 
+  const [counter, setCounter] = useState(0);
+  /**
+   * useCallback shines when we want to prevent functions
+   * from changing all the time and normally you would want
+   * that to happen whenever you use React.memo
+   */
+  const increment = useCallback(() => {
+    setCounter((c) => c + 1);
+  }, [setCounter]);
+
   return (
     <div>
+      <div>
+        <World increment={increment} />
+        <div>useCallback counter: {counter}</div>
+      </div>
+
       <div style={{ display: "flex" }}>
         <div ref={elementRef}>{loading ? "loading ...!" : data}</div>
       </div>
